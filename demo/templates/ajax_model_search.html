@@ -1,0 +1,7 @@
+{% if models.count > 0 %}
+	{% for model in models %}
+		<li class="list-group-item"><a href="{% url 'model' model.user_number %}" >{{ model.username }}</a></li>
+	{% endfor %}
+{% else %}
+	<li class="list-group-item">No matches found</li>
+{% endif %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block head %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#fetch').click(function() {
+				$.ajax({
+			    	type: "GET",
+			        url: "http://resolver.globalnames.org/name_resolvers.json",
+			        data: {
+						"names" : $('#search').val()
+					},
+					success: searchSuccess,
+					dataType: "json"
+				});
+			});
+			function searchSuccess(data, textStatus, jqXHR) {
+			    $('#example').DataTable( {
+			        data: data['data'][0]["results"],
+			        "columns": [
+			            { "data": "data_source_id" },
+			            { "data": "data_source_title" },
+			            { "data": "gni_uuid"},
+			            { "data": "name_string" },
+			            { "data": "canonical_form" },
+			            { "data": "classification_path" },
+			            { "data": "classification_path_ranks" },
+			            { "data": "classification_path_ids" },
+			            { "data": "taxon_id" },
+			            { "data": "local_id" },
+			            { "data": "edit_distance" },
+			            { "data": "match_type" },
+			            { "data": "prescore" },
+			            { "data": "score" }
+
+			        ]
+			    });
+			}
+		});
+	</script>
+{% endblock head %}
+{% block nav %}{% endblock nav %}
+{% block container %}
+	<div class="row">
+		<div class="col-sm-12 col-md-12 main">
+			{% block pageheaders %}
+				<h1 class="page-header">Global Names Resolver</h1>
+				<h3 class="sub-header">Search</h3>
+			{% endblock pageheaders %}
+			{% block alerts %}{% endblock alerts %}
+
+			<input type="text" class="form-control" id="search" name="search">
+			<button type="button" class="btn btn-info pull-right" id="fetch">Search</button>
+			<br>
+			<br>
+			<div class="table-responsive">
+				<table class="table table-striped" id="example" class="display" cellspacing="0" width="100%">
+			        <thead>
+			            <tr>
+			                <th>Data source id</th>
+			                <th>Data source title</th>
+			                <th>GNI UUID</th>
+			                <th>Name string</th>
+			                <th>Canonical form</th>
+							<th>Classification path</th>
+							<th>Classification path ranks</th>
+							<th>Classification_path ids</th>
+							<th>Taxon id</th>
+							<th>Local id</th>
+							<th>Edit distance</th>
+							<th>Match type</th>
+							<th>Prescore</th>
+							<th>Score</th>
+
+			            </tr>
+			        </thead>
+
+			        <tfoot>
+			            <tr>
+			                <th>Data source id</th>
+			                <th>Data source title</th>
+			                <th>GNI UUID</th>
+			                <th>Name string</th>
+			                <th>Canonical form</th>
+							<th>Classification path</th>
+							<th>Classification path ranks</th>
+							<th>Classification_path ids</th>
+							<th>Taxon id</th>
+							<th>Local id</th>
+							<th>Edit distance</th>
+							<th>Match type</th>
+							<th>Prescore</th>
+							<th>Score</th>
+			            </tr>
+			        </tfoot>
+				</table>
+			</div>
+
+		</div>
+	</div>
+{% endblock container %}
